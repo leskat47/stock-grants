@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
-import OptionForm from './OptionForm';
-import Report from './Report';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+import OptionForm from './OptionForm/OptionForm';
+import Report from './Report/Report';
 import './App.css';
 var moment = require('moment');
 
 class App extends Component {
   constructor(props) {
     super(props);
+    const { cookies } = this.props;
 
-    this.state = {
-      stockOptions: []
+    if (cookies.get('grants') === "undefined") {
+      this.state = { grants: [] };
+    } else {
+      this.state = { grants: cookies.get('grants') };
     }
+    debugger;
     this.handleData = this.handleData.bind(this);
+    this.updateCookies = this.updateCookies.bind(this);
   }
 
-  handleData(shares, outstanding, strike, enter, exit, valuation, total, annual) {
+  static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+
+  };
+  handleData (shares, outstanding, strike, enter, exit, valuation, total, annual) {
     this.setState({
-        stockOptions: [{shares: shares, outstanding: outstanding,
+        grants: [{shares: shares, outstanding: outstanding,
                         strike: strike, enter: enter, exit: exit, valuation: valuation,
-                        total:total, annual: annual},
-                        ...this.state.stockOptions],
-    })
+                        total: total, annual: annual},
+                        ...this.state.grants],
+    }, this.updateCookies)
+  }
+
+  updateCookies () {
+    const { cookies } = this.props;
+    cookies.set('grants', this.state.grants, { path: '/' });
   }
 
   calculateTotal (shares, outstanding, valuation, strike) {
@@ -44,10 +60,10 @@ class App extends Component {
           <h1>Option Grant Calculator</h1>
         </header>
         <OptionForm addData={this.handleData} calculateTotal={this.calculateTotal} calculateAnnual={this.calculateAnnual} />
-        <Report allOptions={this.state.stockOptions}/>
+        <Report allOptions={this.state.grants}/>
       </div>
     );
   }
 }
 
-export default App;
+export default withCookies(App);

@@ -56,7 +56,6 @@ class OptionForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    console.log(this.state)
     this.props.addData(this.state.shares,
                        this.state.outstandingShares,
                        this.state.strikePrice,

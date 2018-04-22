@@ -136,7 +136,6 @@ class OptionForm extends Component {
         Strike/Exercise Price: <input
                           name="strikePrice"
                           type="number"
-                          min="1"
                           step='0.0001'
                           placeholder='0.00'
                           value={this.state.strikePrice}
@@ -168,7 +167,6 @@ class OptionForm extends Component {
                           name="exitValuation"
                           type="number"
                           min="0"
-                          step='0.01'
                           placeholder='0.00'
                           value={this.state.exitValuation}
                           onChange={this.handleInputChange} />

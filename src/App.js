@@ -45,11 +45,13 @@ class App extends Component {
   }
 
   calculateAnnual (enter, exit, total) {
-    const timeElapsed = Math.round(moment.duration(moment(exit, "YYYY-MM-DD") -
-                                   moment(enter, "YYYY-MM-DD").startOf('day')).asYears(),
-                                   2)
-    const annual = Math.round(total / timeElapsed, 2)
-    return annual;
+    const timeElapsed = (moment.duration(moment(exit, "YYYY-MM-DD") -
+                                   moment(enter, "YYYY-MM-DD").startOf('day')).asYears()).toFixed(2)
+    if (timeElapsed > 1){
+      return (total / timeElapsed).toFixed(2);
+    } else {
+      return total;
+    }
   }
 
   render() {

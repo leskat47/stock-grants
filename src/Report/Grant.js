@@ -7,11 +7,9 @@ class Message extends Component {
   render() {
     return (
       <div className="Grant">
-          <p>Enter date: {this.props.enter}</p>
-          <p>Exit date: {this.props.exit}</p>
+          <p>Enter date: {this.props.enter} Exit date: {this.props.exit}</p>
           <p>Number of shares: {this.props.shares}</p>
-          <p>Total value: $ {this.props.total}</p>
-          <p>Total annual value: $ {this.props.annual}</p>
+          <p>Total value: $ {this.props.total} Total annual value: $ {this.props.annual}</p>
 
       </div>
     )

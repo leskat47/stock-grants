@@ -16,7 +16,6 @@ class App extends Component {
     } else {
       this.state = { grants: cookies.get('grants') };
     }
-    debugger;
     this.handleData = this.handleData.bind(this);
     this.updateCookies = this.updateCookies.bind(this);
   }

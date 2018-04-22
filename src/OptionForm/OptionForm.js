@@ -10,20 +10,32 @@ class OptionForm extends Component {
       shares: '',
       outstandingShares: '',
       strikePrice: '',
+      exitValuation: '',
       enterDate: '',
       exitDate: '',
-      exitValuation: '',
       totalValue: '--',
       annualValue: '--'
     };
+    this.isEnabled = this.validateInput();
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.validateInput = this.validateInput.bind(this);
   }
 
   static propTypes = {
     addData: PropTypes.func.isRequired,
     calculateTotal: PropTypes.func.isRequired,
     calculateAnnual: PropTypes.func.isRequired,
+  }
+
+  validateInput() {
+    var { shares, outstandingShares, strikePrice, exitValuation, ...rest } = this.state;
+    const blanks = [shares, outstandingShares, strikePrice, exitValuation].filter(x => (x === 0) || (x === ''))
+    if (blanks.length) {
+      return false
+    }
+    return true
   }
 
   handleInputChange(event) {
@@ -38,7 +50,15 @@ class OptionForm extends Component {
         this.setState({ 'dateError': '' });
       }
     }
+
+    if (['shares', 'outstandingShares', 'strikePrice', 'exitValuation'].includes(name) ) {
+      if (target < 0) {
+
+      }
+    }
+
     this.setState({ [name]: value }, this.getReturn);
+    this.isEnabled = this.validateInput();
   }
 
   getReturn() {
@@ -93,6 +113,7 @@ class OptionForm extends Component {
                           name="outstandingShares"
                           type="number"
                           min="0"
+                          required
                           value={this.state.outstandingShares}
                           onChange={this.handleInputChange} />
       </label>
@@ -147,7 +168,7 @@ class OptionForm extends Component {
       Annual Value: $ {this.state.annualValue}
       </p>
       <p>
-        <input type="submit" className="btn" value="Add to My Records" />
+        <input type="submit" className="btn" value="Add to My Records" disabled = { !this.isEnabled } />
       </p>
     </form>
     </div>

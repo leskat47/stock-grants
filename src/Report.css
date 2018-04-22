@@ -1,0 +1,11 @@
+.Report {
+  background-color: #aed7ae;
+  border-radius: 5px;
+  border: white solid 2px;
+  padding: 0 10px 5px 10px;
+  display: inline-block;
+  width: 40%;
+  min-height: 300px;
+  margin: 20px;
+  vertical-align: top;
+}

@@ -1,0 +1,17 @@
+.OptionForm {
+  padding: 10px;
+  display: inline-block;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.btn {
+  background-color:  #aed7ae;
+  border-radius: 2px;
+  border: solid 1px  #529350;
+  font-weight: bold;
+  padding: 5px;
+}

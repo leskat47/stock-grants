@@ -1,6 +1,7 @@
 .OptionForm {
   padding: 10px;
   display: inline-block;
+  min-width: 500px;
 }
 
 .error {

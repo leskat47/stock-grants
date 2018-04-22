@@ -30,9 +30,17 @@ class OptionForm extends Component {
   }
 
   validateInput() {
-    var { shares, outstandingShares, strikePrice, exitValuation, ...rest } = this.state;
+    var { shares,
+        outstandingShares,
+        strikePrice,
+        exitValuation,
+        enterDate,
+        exitDate,
+        totalValue,
+        annualValue} = this.state;
     const blanks = [shares, outstandingShares, strikePrice, exitValuation].filter(x => (x === 0) || (x === ''))
-    if (blanks.length) {
+
+    if (blanks.length || totalValue === '--') {
       return false
     }
     return true
@@ -42,7 +50,6 @@ class OptionForm extends Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-
     if ((name === 'exitDate' && this.state.enterDate) || (name === 'enterDate' && this.state.exitDate)) {
       if (moment(this.state.enterDate) > moment(value, "YYYY-MM-DD")){
         this.setState({'dateError': "Exit date must be greater than enter date."})
@@ -52,8 +59,10 @@ class OptionForm extends Component {
     }
 
     if (['shares', 'outstandingShares', 'strikePrice', 'exitValuation'].includes(name) ) {
-      if (target < 0) {
-
+      if (value < 0 || value === '') {
+        event.target.nextSibling.removeAttribute("hidden");
+      } else if (!event.target.nextSibling.getAttribute("hidden")){
+        event.target.nextSibling.setAttribute("hidden", true);
       }
     }
 
@@ -69,6 +78,8 @@ class OptionForm extends Component {
                                               this.state.strikePrice)
       if (total > 0) {
         this.setState({'totalValue': total}, this.getAnnual);
+      } else {
+        this.setState({'totalValue': '--', 'annualValue': '--'});
       }
     }
   }
@@ -105,6 +116,7 @@ class OptionForm extends Component {
                           min="0"
                           value={this.state.shares}
                           onChange={this.handleInputChange} />
+                          <span className="error" hidden> Enter valid amount</span>
       </label>
       </p>
       <p>
@@ -116,6 +128,7 @@ class OptionForm extends Component {
                           required
                           value={this.state.outstandingShares}
                           onChange={this.handleInputChange} />
+                          <span className="error" hidden> Enter valid amount</span>
       </label>
       </p>
       <p>
@@ -128,6 +141,7 @@ class OptionForm extends Component {
                           placeholder='0.00'
                           value={this.state.strikePrice}
                           onChange={this.handleInputChange} />
+                          <span className="error" hidden> Enter valid amount</span>
       </label>
       </p>
       <p>
@@ -158,6 +172,7 @@ class OptionForm extends Component {
                           placeholder='0.00'
                           value={this.state.exitValuation}
                           onChange={this.handleInputChange} />
+                          <span className="error" hidden> Enter valid amount </span>
       </label>
       </p>
 

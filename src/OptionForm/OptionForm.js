@@ -7,6 +7,12 @@ class OptionForm extends Component {
   constructor(props) {
     super();
     this.state = {
+      shares: '',
+      outstandingShares: '',
+      strikePrice: '',
+      enterDate: '',
+      exitDate: '',
+      exitValuation: '',
       totalValue: '--',
       annualValue: '--'
     };

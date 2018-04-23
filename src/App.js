@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
     const { cookies } = this.props;
 
-    if (cookies.get('grants') === "undefined") {
+    if (!cookies.get('grants')) {
       this.state = { grants: [] };
     } else {
       this.state = { grants: cookies.get('grants') };

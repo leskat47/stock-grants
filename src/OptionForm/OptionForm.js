@@ -34,10 +34,7 @@ class OptionForm extends Component {
         outstandingShares,
         strikePrice,
         exitValuation,
-        enterDate,
-        exitDate,
-        totalValue,
-        annualValue} = this.state;
+        totalValue } = this.state;
     const blanks = [shares, outstandingShares, strikePrice, exitValuation].filter(x => (x === 0) || (x === ''))
 
     if (blanks.length || totalValue === '--') {
